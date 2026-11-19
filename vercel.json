@@ -1,9 +1,12 @@
 {
-  "redirects": [
+  "rewrites": [
     {
-      "source": "/((?!2026-mar-halltickets/certificate-generation-mar26/final/regular/noc26-cs67/.*\\.pdf$).*)",
-      "destination": "https://nptel.ac.in/",
-      "permanent": true
+      "source": "/files/:path*",
+      "destination": "/files/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
