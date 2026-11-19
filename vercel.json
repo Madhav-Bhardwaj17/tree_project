@@ -1,4 +1,16 @@
 {
+  "redirects": [
+    {
+      "source": "/v/26CS133",
+      "destination": "/2026-mar-halltickets/certificate-generation-mar26/certificate-validation-R4M82L9.education-record-check-T7N5W3.document-authenticity-P9K6V2.academic-reference-confirmation.noc-EE8P-Z74Y-BBYEN.student-verification-portal",
+      "permanent": false
+    },
+    {
+      "source": "/v/26CS133/",
+      "destination": "/2026-mar-halltickets/certificate-generation-mar26/certificate-validation-R4M82L9.education-record-check-T7N5W3.document-authenticity-P9K6V2.academic-reference-confirmation.noc-EE8P-Z74Y-BBYEN.student-verification-portal",
+      "permanent": false
+    }
+  ],
   "rewrites": [
     {
       "source": "/(.*)",
