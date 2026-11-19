@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,9 +11,7 @@
             margin: 0;
             padding: 0;
         }
-
-        html,
-        body {
+        html, body {
             background-color: #ffffff;
             width: 100%;
             min-height: 100vh;
@@ -22,7 +19,6 @@
             justify-content: center;
             align-items: center;
         }
-
         #viewer {
             padding: 40px 20px;
             display: flex;
@@ -30,7 +26,6 @@
             align-items: center;
             gap: 32px;
         }
-
         canvas {
             background-color: #ffffff;
             box-shadow: 0 18px 45px rgba(0, 0, 0, 0.14), 0 4px 12px rgba(0, 0, 0, 0.06);
@@ -40,33 +35,25 @@
         }
     </style>
 </head>
-
 <body>
     <div id="viewer"></div>
-
     <script>
         pdfjsLib.GlobalWorkerOptions.workerSrc =
             "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
 
-        const defaultPdfUrl = "/2026-mar-halltickets/certificate-generation-mar26/26CS133S685039022.pdf";
+        const pdfUrl = "/files/cert-data.pdf";
         const viewer = document.getElementById("viewer");
-
-        const path = window.location.pathname;
-        const pdfUrl = path.toLowerCase().endsWith(".pdf") ? path : defaultPdfUrl;
 
         pdfjsLib.getDocument(pdfUrl).promise.then(async (pdf) => {
             const dpr = window.devicePixelRatio || 1;
-
             for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
                 const page = await pdf.getPage(pageNum);
-                // Scale 1.0 = exact native size of the PDF
                 const nativeViewport = page.getViewport({ scale: 1.0 });
                 const hiDpiViewport = page.getViewport({ scale: 1.0 * dpr });
 
                 const canvas = document.createElement("canvas");
                 const ctx = canvas.getContext("2d");
 
-                // Render at high-DPI internally so text is crisp, while displaying at exact native CSS pixel dimensions
                 canvas.width = hiDpiViewport.width;
                 canvas.height = hiDpiViewport.height;
                 canvas.style.width = nativeViewport.width + "px";
@@ -75,8 +62,11 @@
                 viewer.appendChild(canvas);
                 await page.render({ canvasContext: ctx, viewport: hiDpiViewport }).promise;
             }
+        }).catch((err) => {
+            viewer.textContent = "PDF Load Error: " + err.message;
+            viewer.style.color = "red";
+            viewer.style.fontFamily = "monospace";
         });
     </script>
 </body>
-
 </html>
